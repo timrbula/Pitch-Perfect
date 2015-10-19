@@ -59,9 +59,8 @@ final class PlaySoundsViewController: UIViewController {
         
     //stop player, set playback rate and play
     func startAudioPlayerWithPlaybackRate(playbackRate: Float) {
-        audioPlayer.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        
+        stopPlayerAndEngineForNewPlay()
         
         audioPlayer.rate = playbackRate
         audioPlayer.currentTime =  0.0
@@ -73,9 +72,8 @@ final class PlaySoundsViewController: UIViewController {
     //play the variable pitch audio
     //takes float to set
     func playAudioWithVariablePitch(pitch: Float) {
-        audioPlayer.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        
+        stopPlayerAndEngineForNewPlay()
         
         let audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
@@ -91,6 +89,13 @@ final class PlaySoundsViewController: UIViewController {
         try! audioEngine.start()
         audioPlayerNode.play()
         
+    }
+    
+    func stopPlayerAndEngineForNewPlay() {
+        audioPlayer.stop()
+        audioEngine.stop()
+        audioEngine.reset()
+    
     }
     
     //stop audio from playing

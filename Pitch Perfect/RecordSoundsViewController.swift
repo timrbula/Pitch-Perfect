@@ -19,23 +19,18 @@ final class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegat
     //global variables
     var audioRecorder:AVAudioRecorder!
     var recordedAudio:RecordedAudio!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
+
     
     //set up screen before it appears
     override func viewWillAppear(animated: Bool) {
+        
+        //call super init for forward compatability
+        super.viewWillAppear(animated)
+        
         btnStop.hidden = true
         btnRecord.enabled = true
         lblAudioRecordingMessage.text = "tap to record"
         
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    
     }
     
     //record audio on touch of microphone button
@@ -68,16 +63,17 @@ final class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegat
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
         if(flag){
             recordedAudio = RecordedAudio(filePathUrl: recorder.url, title: recorder.url.lastPathComponent)
-            self.performSegueWithIdentifier("stopRecording", sender: recordedAudio)
-        }else{
+            performSegueWithIdentifier("stopRecording", sender: recordedAudio)
+        }else {
             print("Did not finish recording successfully")
             btnRecord.enabled = true
             btnStop.hidden = true
+            lblAudioRecordingMessage.text = "recording unsuccessful"
         }
     
     }
     
-    //stop recording audio on press
+    //stop recording audio on touch of stop button
     @IBAction func stopAudioRecording(sender: UIButton) {
         lblAudioRecordingMessage.text = "Stopped recording audio"
         btnStop.hidden = true
